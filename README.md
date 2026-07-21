@@ -1,4 +1,3 @@
-"# student-management-backend" 
 # 🎓 Student Management System - Backend
 
 A secure and scalable **Student Management System Backend** built using **Java Spring Boot**, **Spring Security**, **JWT Authentication**, **MySQL**, and **Spring Data JPA**. This project provides RESTful APIs for user authentication and student management.
