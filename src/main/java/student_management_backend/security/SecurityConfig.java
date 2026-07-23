@@ -9,6 +9,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -33,14 +39,30 @@ public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
 public SecurityFilterChain securityFilterChain(HttpSecurity http)
         throws Exception {
 
-    http
-        .csrf(csrf -> csrf.disable())
+   http
+    .cors(cors -> {})
+    .csrf(csrf -> csrf.disable())
         .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/auth/**").permitAll()
-.requestMatchers("/students/**").authenticated()
-.anyRequest().authenticated()
+    .requestMatchers(
+        "/auth/**",
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/swagger-ui.html"
+    ).permitAll()
+.requestMatchers(HttpMethod.GET, "/students/**")
+.hasAnyRole("ADMIN", "USER")
+
+.requestMatchers(HttpMethod.POST, "/students/**")
+.hasRole("ADMIN")
+
+.requestMatchers(HttpMethod.PUT, "/students/**")
+.hasRole("ADMIN")
+
+.requestMatchers(HttpMethod.DELETE, "/students/**")
+.hasRole("ADMIN")
+    .anyRequest().authenticated()
 )
         .addFilterBefore(
                 jwtAuthenticationFilter,
@@ -48,5 +70,22 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http)
         );
 
     return http.build();
+}
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+
+    CorsConfiguration configuration = new CorsConfiguration();
+
+    configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source =
+            new UrlBasedCorsConfigurationSource();
+
+    source.registerCorsConfiguration("/**", configuration);
+
+    return source;
 }
 }

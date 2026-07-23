@@ -1,11 +1,13 @@
 package student_management_backend.dto;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class RegisterRequest {
 
+    @NotBlank(message = "Username is required")
     private String username;
-    private String password;
 
+    @NotBlank(message = "Password is required")
+    private String password;
 }

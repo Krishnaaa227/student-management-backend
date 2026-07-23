@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import student_management_backend.dto.StudentDTO;
@@ -31,10 +32,16 @@ public ResponseEntity<StudentDTO> addStudent(
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(studentService.saveStudent(student));
 }
-    @GetMapping
+  @GetMapping
 public List<StudentDTO> getAllStudents() {
     return studentService.getAllStudents();
 }
+
+@GetMapping("/me")
+public Authentication me(Authentication authentication) {
+    return authentication;
+}
+
 @GetMapping("/{id}")
 public StudentDTO getStudentById(@PathVariable Long id) {
     return studentService.getStudentById(id);
