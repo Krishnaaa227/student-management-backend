@@ -46,11 +46,12 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http)
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
     .requestMatchers(
-        "/auth/**",
-        "/swagger-ui/**",
-        "/v3/api-docs/**",
-        "/swagger-ui.html"
-    ).permitAll()
+    "/",
+    "/auth/**",
+    "/swagger-ui/**",
+    "/v3/api-docs/**",
+    "/swagger-ui.html"
+).permitAll()
 .requestMatchers(HttpMethod.GET, "/students/**")
 .hasAnyRole("ADMIN", "USER")
 

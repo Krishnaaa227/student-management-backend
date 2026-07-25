@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class HomeController {
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello Krishna! Welcome to Student Management System";
+    @GetMapping("/")
+    public String home() {
+        return "Student Management Backend is Running 🚀";
     }
 }
