@@ -40,11 +40,12 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http)
         throws Exception {
 
    http
-    .cors(cors -> {})
+    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
     .csrf(csrf -> csrf.disable())
         .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
     .requestMatchers(
     "/",
     "/auth/**",
@@ -77,9 +78,9 @@ public CorsConfigurationSource corsConfigurationSource() {
 
     CorsConfiguration configuration = new CorsConfiguration();
 
-    configuration.setAllowedOrigins(List.of(
+    configuration.setAllowedOriginPatterns(List.of(
     "http://localhost:5173",
-    "https://student-management-frontend-onm096522-krishnaaa227s-projects.vercel.app/"
+    "https://student-management-frontend-3bvxdrv6k-krishnaaa227s-projects.vercel.app/"
 ));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("*"));
