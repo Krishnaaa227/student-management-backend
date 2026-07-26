@@ -78,8 +78,11 @@ public AuthenticationResponse login(LoginRequest request) {
                         .build())
                 .orElseThrow();
 
+User user = userRepository.findByUsername(request.getUsername())
+        .orElseThrow();
+
 String token = jwtService.generateToken(userDetails);
 
-return new AuthenticationResponse(token);
+return new AuthenticationResponse(token, user.getRole());
 }
 }
