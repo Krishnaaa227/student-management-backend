@@ -80,7 +80,7 @@ public CorsConfigurationSource corsConfigurationSource() {
 
     configuration.setAllowedOriginPatterns(List.of(
     "http://localhost:5173",
-    "https://student-management-frontend-3bvxdrv6k-krishnaaa227s-projects.vercel.app/"
+    "https://*.vercel.app"
 ));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("*"));
