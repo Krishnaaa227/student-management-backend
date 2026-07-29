@@ -48,28 +48,31 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http)
         .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
     .requestMatchers(
-    "/",
-    "/auth/**",
-    "/swagger-ui/**",
-    "/v3/api-docs/**",
-    "/swagger-ui.html"
-).permitAll()
-.requestMatchers(HttpMethod.GET, "/students/**")
-.hasAnyRole("ADMIN", "USER")
+        "/",
+        "/auth/**",
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/swagger-ui.html"
+    ).permitAll()
 
-.requestMatchers(HttpMethod.POST, "/students/**")
-.hasRole("ADMIN")
+    // Students
+    .requestMatchers(HttpMethod.GET, "/students/**").hasAnyRole("ADMIN", "USER")
+    .requestMatchers(HttpMethod.POST, "/students/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.PUT, "/students/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.DELETE, "/students/**").hasRole("ADMIN")
 
-.requestMatchers(HttpMethod.PUT, "/students/**")
-.hasRole("ADMIN")
+    // Courses
+    .requestMatchers(HttpMethod.GET, "/courses/**").hasAnyRole("ADMIN", "USER")
+    .requestMatchers(HttpMethod.POST, "/courses/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.PUT, "/courses/**").hasRole("ADMIN")
+    .requestMatchers(HttpMethod.DELETE, "/courses/**").hasRole("ADMIN")
 
-.requestMatchers(HttpMethod.DELETE, "/students/**")
-.hasRole("ADMIN")
+    // Dashboard
+    .requestMatchers(HttpMethod.GET, "/dashboard/**").hasAnyRole("ADMIN", "USER")
 
-.requestMatchers(HttpMethod.GET, "/dashboard/**")
-.hasAnyRole("ADMIN", "USER")
     .anyRequest().authenticated()
 )
         .addFilterBefore(
