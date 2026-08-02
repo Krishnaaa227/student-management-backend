@@ -169,20 +169,10 @@ The APIs can be tested using:
 * Insomnia
 
 ---
+## Frontend Repository
 
-## 📌 Future Improvements
+https://github.com/Krishnaaa227/student-management-frontend
 
-* Role-Based Authorization (ADMIN / USER)
-* Student Search & Filtering
-* Pagination & Sorting
-* Swagger API Documentation
-* File Upload
-* Docker Support
-* Unit & Integration Testing
-* Deployment on Render or Railway
-* React Frontend Integration
-
----
 
 ## 👨‍💻 Author
 
