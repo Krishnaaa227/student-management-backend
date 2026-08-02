@@ -27,22 +27,28 @@ public class DashboardService {
 
     public DashboardStatsDTO getStats() {
 
-        long admins = userRepository.findAll()
-                .stream()
-                .filter(user -> user.getRole().equals("ADMIN"))
-                .count();
+    long admins = userRepository.findAll()
+            .stream()
+            .filter(user -> user.getRole().equals("ADMIN"))
+            .count();
 
-        return new DashboardStatsDTO(
+    long totalSemesters = studentRepository.findAll()
+            .stream()
+            .map(student -> student.getSemester())
+            .distinct()
+            .count();
 
-                studentRepository.count(),
+    return new DashboardStatsDTO(
 
-                courseRepository.count(),
+            studentRepository.count(),
 
-                userRepository.count(),
+            courseRepository.count(),
 
-                admins
+            totalSemesters,
 
-        );
+            admins
+
+    );
 
     }
     public List<CourseChartDTO> getStudentsByCourse() {
