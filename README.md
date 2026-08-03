@@ -171,7 +171,7 @@ The APIs can be tested using:
 ---
 ## Frontend Repository
 
-https://github.com/Krishnaaa227/student-management-frontend
+https://student-management-system-bykrishna.vercel.app/
 
 
 ## 👨‍💻 Author
